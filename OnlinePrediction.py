@@ -6,32 +6,10 @@ Created on Tue Oct 25 16:45:12 2022
 """
 import random
 
-#total_cost = 0;         ##We use it to record the total online cost
-#cache_cost = 1;
-#transfer_cost = 2;      #We assume that the transfer cost is 2.
 
-#hyper_para = 1;       ##hyperparameter of the online algorithm with prediction
-#prediction_accuracy = 0.7;
-#cache_time = [transfer_cost/hyper_para, hyper_para*transfer_cost];   ##two possible storage periods in the online algorithm with prediction
-
-#requests = [0,1,4,5,8];
-#local_server = [0,1,1,2,0];      ##the local servers of requests (indexed from 0)
-#servers = max(local_server);     ##number of servers-1
-#last_local = [0]+[float('-inf')]*(servers);    ##record the arrival time of the last local request
-
-#nextIAT = [0]*(len(requests));     ##the arrival time of the next local request
-#previous = [0]*(len(requests));    ##the index of previous request in the same server
-#expiration_time = [transfer_cost]+[float('-inf')]*(len(requests)-1);  ##the expiration of regular copy in the online algorithm
-
-#prediction = [-1]*(len(requests));   ##the binary prediction of whether the next arrival time is larger than transfer cost
-                                     ##0---smaller than transfer cost, 1---larger than transfer cost
-
-
-
-def online(requests, local_server, hyper_para, prediction_accuracy):
+def online(requests, local_server, hyper_para, prediction_accuracy, transfer_cost):
     total_cost = 0;         ##We use it to record the total online cost
     cache_cost = 1;
-    transfer_cost = 10000;      #We assume that the transfer cost is 2.
     
     cache_time = [transfer_cost/hyper_para, hyper_para*transfer_cost];   ##two possible storage periods in the online algorithm with prediction
     servers = max(local_server);     ##number of servers-1

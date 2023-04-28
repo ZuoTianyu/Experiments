@@ -6,11 +6,10 @@ Created on Wed Oct 26 15:27:06 2022
 """
 
 cache_cost = 1;
-transfer_cost = 10000;            #We assume that the transfer cost is 2.
 
 
 ##Find the candidate request r_k s.t. the storage period [r_{p(k)},r_k] crosses r_{p(i)}
-def FindHighestCross(start, end, requests, previous):
+def FindHighestCross(start, end, requests, previous, transfer_cost):
     highestCross = start;           ##highestCross is the highest index of request r_h between r_{p(i)} and r_{i} s.t. t_{h}-t_{p(h)} < transfer_cost
     candidate = [];
     first_request = [];             ##this list is used to store the indexes of candidate requests
@@ -33,7 +32,7 @@ def FindHighestCross(start, end, requests, previous):
 
 
 ##calcuate the marginal cost of request from index start to index end
-def MarginalBound(start, end, requests, previous):
+def MarginalBound(start, end, requests, previous, transfer_cost):
     cost = 0;
     cache = 0;
     for i in range(start, end+1):
@@ -49,7 +48,7 @@ def MarginalBound(start, end, requests, previous):
 
 
 
-def offline(requests,local_server):
+def offline(requests, local_server, transfer_cost):
     #requests = [0,1,4,5,8];          ##The request sequence should contain dummy request.
     #local_server =  [0,1,1,2,0];      ##the local servers of requests (indexed from 0)
     servers = max(local_server);     ##number of servers-1
@@ -86,11 +85,11 @@ def offline(requests,local_server):
         ##calculate the optimal cost when r_i is served by local cache
         ##case 1: For r_i, there is a previous local request in the same server. 
         if previous[i] > -1:
-            pivots = FindHighestCross(previous[i], i, requests, previous);
-            mincost = optimal[previous[i]] + (requests[i]-requests[previous[i]]) + MarginalBound(previous[i]+1, i-1, requests, previous);    
+            pivots = FindHighestCross(previous[i], i, requests, previous, transfer_cost);
+            mincost = optimal[previous[i]] + (requests[i]-requests[previous[i]]) + MarginalBound(previous[i]+1, i-1, requests, previous, transfer_cost);    
             candidate = mincost;
             for pivot in pivots:   ##use this for-loop to find the optimal cost when r_i is served by local cache
-                candidate = D[pivot] + (requests[i]-requests[previous[i]]) + MarginalBound(pivot+1, i-1, requests, previous);
+                candidate = D[pivot] + (requests[i]-requests[previous[i]]) + MarginalBound(pivot+1, i-1, requests, previous, transfer_cost);
             
                 if candidate < mincost:    ##find the minimal value of Type-D
                     mincost = candidate;
@@ -105,6 +104,3 @@ def offline(requests,local_server):
         optimal[i] = min(D[i],F[i]);
         
     return(optimal[len(requests)-1]);
-
-#print(optimal[len(requests)-1]);
-#print(offline([0,1,4,5,8],[0,1,1,2,0]))

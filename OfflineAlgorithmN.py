@@ -5,15 +5,12 @@ Created on Wed Oct 26 15:27:06 2022
 @author: user
 """
 
-cache_cost = 1;
-
 
 ##Find the candidate request r_k s.t. the storage period [r_{p(k)},r_k] crosses r_{p(i)}
 def FindHighestCross(start, end, requests, previous, transfer_cost):
     highestCross = start;           ##highestCross is the highest index of request r_h between r_{p(i)} and r_{i} s.t. t_{h}-t_{p(h)} < transfer_cost
     candidate = [];
     first_request = [];             ##this list is used to store the indexes of candidate requests
-    
     
     ##use this for-loop to find the set of candidate requests
     for i in range(start+1, end):
@@ -23,9 +20,6 @@ def FindHighestCross(start, end, requests, previous, transfer_cost):
                 highestCross = i; 
     
     ##rule out some of the candidate requests if they are before the request with index highestCross 
-    #for request in first_request:
-        #if request < highestCross:
-        #    first_request.remove(request);
     first_request = [x for x in candidate if x>=highestCross];
             
     return first_request;

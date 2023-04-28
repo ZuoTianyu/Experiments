@@ -41,7 +41,7 @@ def MarginalBound(start, end, requests, previous, transfer_cost):
 
 
 
-
+##calculate the optimal offline cost of the request sequence
 def offline(requests, local_server, transfer_cost):
     #requests = [0,1,4,5,8];          ##The request sequence should contain dummy request.
     #local_server =  [0,1,1,2,0];      ##the local servers of requests (indexed from 0)

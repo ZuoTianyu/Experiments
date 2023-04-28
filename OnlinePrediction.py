@@ -6,7 +6,7 @@ Created on Tue Oct 25 16:45:12 2022
 """
 import random
 
-
+##calculate the optimal offline cost of the request sequence
 def online(requests, local_server, hyper_para, prediction_accuracy, transfer_cost):
     total_cost = 0;         ##We use it to record the total online cost
     cache_cost = 1;

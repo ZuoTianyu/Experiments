@@ -62,6 +62,7 @@ for ID in id_list:
             ratio = np.zeros((len(hyperpara),len(accuracy)));
 
 
+            ##calculate the online-to-offline ratio, under different combinations of hyperparameters and prediction accuracies
             offline_cost = offline(requests,local_server, transfer_cost);
             consistency = True;
             robustness = True;
@@ -77,7 +78,7 @@ for ID in id_list:
                             consistency = False;
         
         
-
+            ##draw the surface diagram
             fig = plt.figure();
             ax = plt.axes(projection = '3d');
             ax.plot_surface(A,H,ratio,alpha=1,cmap='rainbow');
